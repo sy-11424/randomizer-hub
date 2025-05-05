@@ -3,32 +3,32 @@ import { useState } from "react";
 export default function Travel() {
   const travelOptions = [
     "🇯🇵 Tokyo",
-    "🇮🇹 Rome",
     "🇫🇷 Paris",
     "🇺🇸 New York",
-    "🇲🇽 Mexico City",
-    "🇹🇭 Bangkok",
-    "🇨🇳 Beijing",
     "🇰🇷 Seoul",
     "🇪🇸 Barcelona",
+    "🇹🇭 Bangkok",
+    "🇦🇺 Sydney",
+    "🇨🇦 Vancouver",
+    "🇮🇹 Rome",
     "🇬🇧 London",
   ];
 
-  const [place, setPlace] = useState("");
+  const [destination, setDestination] = useState("");
 
-  const generatePlace = async () => {
+  const generateDestination = async () => {
     const randomIndex = Math.floor(Math.random() * travelOptions.length);
     const selected = travelOptions[randomIndex];
-    setPlace(selected);
+    setDestination(selected);
 
     try {
-      await fetch("http://localhost:4001/api/records", {
+      await fetch("https://randomizer-hub.onrender.com/api/record", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ type: "travel", value: selected }),
       });
     } catch (error) {
-      console.error("Failed to save travel record:", error);
+      console.error("Failed to save record:", error);
     }
   };
 
@@ -38,24 +38,25 @@ export default function Travel() {
         className="h-[50vh] bg-cover bg-center"
         style={{
           backgroundImage:
-            "url('https://images.pexels.com/photos/346885/pexels-photo-346885.jpeg')",
+            "url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e')",
         }}
       ></div>
 
       <div className="flex-grow bg-white flex flex-col items-center justify-center text-center p-8">
         <h2 className="text-3xl font-bold mb-6 text-gray-800">🌍 Where should I go?</h2>
         <button
-          onClick={generatePlace}
-          className="bg-green-500 text-white px-6 py-3 rounded-full text-lg hover:bg-green-600 transition"
+          onClick={generateDestination}
+          className="bg-blue-500 text-white px-6 py-3 rounded-full text-lg hover:bg-blue-600 transition"
         >
           Generate Random Destination
         </button>
-        {place && (
-          <p className="mt-6 text-2xl font-semibold text-green-600">
-            You should travel to: {place}
+        {destination && (
+          <p className="mt-6 text-2xl font-semibold text-blue-600">
+            You should travel to: {destination}
           </p>
         )}
       </div>
     </div>
   );
 }
+

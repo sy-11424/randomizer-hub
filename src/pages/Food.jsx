@@ -16,15 +16,13 @@ export default function Food() {
 
   const [food, setFood] = useState("");
 
-  // 👇 this function runs when user clicks the button
   const generateFood = async () => {
     const randomIndex = Math.floor(Math.random() * foodOptions.length);
     const selected = foodOptions[randomIndex];
     setFood(selected);
 
-    // ✅ Send to backend
     try {
-      await fetch("http://localhost:4001/api/records", {
+      await fetch("https://randomizer-hub.onrender.com/api/record", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ type: "food", value: selected }),
@@ -45,7 +43,9 @@ export default function Food() {
       ></div>
 
       <div className="flex-grow bg-white flex flex-col items-center justify-center text-center p-8">
-        <h2 className="text-3xl font-bold mb-6 text-gray-800">🍽️ What should I eat?</h2>
+        <h2 className="text-3xl font-bold mb-6 text-gray-800">
+          🍽️ What should I eat?
+        </h2>
         <button
           onClick={generateFood}
           className="bg-red-500 text-white px-6 py-3 rounded-full text-lg hover:bg-red-600 transition"
